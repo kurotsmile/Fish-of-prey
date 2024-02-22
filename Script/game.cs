@@ -497,8 +497,6 @@ public class game : MonoBehaviour
 
     private void onBuySuccessCarrotPay(string id_product)
     {
-
-
         if (id_product==this.carrot.shop.get_id_by_index(1))
         {
             this.carrot.show_msg("Purchase", "Purchase successful! Now you can use fish to play", Carrot.Msg_Icon.Success);
@@ -555,6 +553,12 @@ public class game : MonoBehaviour
     private void set_size_all_control_fish()
     {
         this.HorizontalLayoutGroup_control_two.enabled = false;
+    }
+
+    [ContextMenu("Test_upload_socers")]
+    public void Test_upload_socers()
+    {
+        this.carrot.game.update_scores_player(Random.Range(2, 12),0);
     }
 
     #region Gamepad Player
