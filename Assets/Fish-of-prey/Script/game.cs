@@ -1,8 +1,5 @@
-﻿  using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.Services.Authentication;
-using Unity.Services.Authentication.PlayerAccounts;
+﻿using System.Collections.Generic;
+using Carrot;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.Purchasing;
@@ -24,14 +21,11 @@ public class game : MonoBehaviour
     public Sprite icon_buy_all_fish;
     public Sprite icon_nomal_color;
     public Sprite icon_top_player;
-    public Color32[] color_top_player;
     public Color32 color_select;
 
     public AudioSource[] sound;
     public AudioSource music_background;
     public GameObject ca_chet_prefab;
-
-    public GameObject item_socre_prefab;
     public HorizontalLayoutGroup HorizontalLayoutGroup_player_sel;
 
     [Header("Player Game")]
@@ -70,14 +64,15 @@ public class game : MonoBehaviour
     private int index_fish_buy = -1;
     private KeyCode[] KeyCode_default = new KeyCode[10];
 
-    void Start()
+    async void Start()
     {
-        UnityServices.InitializeAsync();
+        await UnityServices.InitializeAsync();
         this.carrot.Load_Carrot(this.check_exit_app);
         this.carrot.shop.onCarrotPaySuccess += this.onBuySuccessCarrotPay;
         this.carrot.act_after_close_all_box = this.set_list_gamepad_main;
-
         this.ads.On_Load();
+        this.carrot.game.act_click_watch_ads_in_music_bk=this.ads.ShowRewardedVideo;
+        this.ads.onRewardedSuccess=this.carrot.game.OnRewardedSuccess;
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
@@ -211,7 +206,6 @@ public class game : MonoBehaviour
             }
             this.panel_play_score.SetActive(false);
         }
-        
 
         if (this.count_number_player == 0)
         {
@@ -236,14 +230,14 @@ public class game : MonoBehaviour
 
     public void game_replay()
     {
-        this.ShowInterstitialAd();
+        this.ads.show_ads_Interstitial();
         this.game_play();
     }
 
     public void back_home()
     {
         this.carrot.game.set_list_button_gamepad_console(this.list_gamepad_main);
-        this.ShowInterstitialAd();
+        this.ads.show_ads_Interstitial();
         this.play_sound(0);
         this.panel_home.SetActive(true);
         this.panel_play.SetActive(false);
@@ -306,11 +300,6 @@ public class game : MonoBehaviour
         }
     }
 
-    public void ShowInterstitialAd()
-    {
-        this.ads.show_ads_Interstitial();
-    }
-
     public void game_rate()
     {
         this.carrot.show_rate();
@@ -319,12 +308,6 @@ public class game : MonoBehaviour
     public void btn_game_share()
     {
         this.carrot.show_share();
-    }
-
-    [ContextMenu("Delete All Data")]
-    public void delete_all_data()
-    {
-        this.carrot.Delete_all_data();
     }
 
     public async void show_list_scores()
@@ -505,16 +488,22 @@ public class game : MonoBehaviour
 
     private void onBuySuccessCarrotPay(string id_product)
     {
+        if (id_product == this.carrot.shop.get_id_by_index(0))
+        {
+            this.carrot.Show_msg("Remove Ads", "Remove Ads Success!", Msg_Icon.Success);
+            this.ads.RemoveAds();
+        }
+
         if (id_product==this.carrot.shop.get_id_by_index(1))
         {
-            this.carrot.Show_msg("Purchase", "Purchase successful! Now you can use fish to play", Carrot.Msg_Icon.Success);
+            this.carrot.Show_msg("Purchase", "Purchase successful! Now you can use fish to play", Msg_Icon.Success);
             PlayerPrefs.SetInt("id_buy_fish" + this.index_fish_buy, 1);
             this.reload_info_player_design();
         }
 
         if (id_product==this.carrot.shop.get_id_by_index(2))
         {
-            this.carrot.Show_msg("Purchase", "Purchase successful! You have bought all kinds of fish and can use them", Carrot.Msg_Icon.Success);
+            this.carrot.Show_msg("Purchase", "Purchase successful! You have bought all kinds of fish and can use them", Msg_Icon.Success);
             PlayerPrefs.SetInt("id_buy_all_fish", 1);
             this.buy_all_fish = true;
             this.reload_info_player_design();

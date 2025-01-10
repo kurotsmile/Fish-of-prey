@@ -41,6 +41,7 @@ public class IronSourceAds : MonoBehaviour
 
     void EnableAds()
     {
+        this.is_ads=true;
         //Add ImpressionSuccess Event
         IronSourceEvents.onImpressionDataReadyEvent += ImpressionDataReadyEvent;
 
@@ -202,10 +203,13 @@ public class IronSourceAds : MonoBehaviour
 
     public void show_ads_Interstitial()
     {
-        this.count_step++;
-        if (this.count_step > this.count_step_show_interstitial)
-        {
-            this.ShowInterstitialAd();
+        if(this.is_ads){
+            this.count_step++;
+            if (this.count_step > this.count_step_show_interstitial)
+            {
+                this.count_step=0;
+                this.ShowInterstitialAd();
+            }
         }
     }
 

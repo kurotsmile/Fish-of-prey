@@ -4193,6 +4193,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5170736565810424378, guid: 03a96ab3934df714c9f607eeba1302ab, type: 3}
+      propertyPath: server
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170736565810424378, guid: 03a96ab3934df714c9f607eeba1302ab, type: 3}
       propertyPath: pay_app
       value: 0
       objectReference: {fileID: 0}
@@ -4364,7 +4368,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3560113166446709643, guid: 03a96ab3934df714c9f607eeba1302ab, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -16635,13 +16640,6 @@ MonoBehaviour:
   icon_buy_all_fish: {fileID: 21300000, guid: 3f70cc338574f8f4f8dab2fb9fa19984, type: 3}
   icon_nomal_color: {fileID: 21300000, guid: 8ea281a0ec39c4f42ba5dc9330b8a478, type: 3}
   icon_top_player: {fileID: 21300000, guid: 3175a3b3dd43be64993b6f4c5de83f36, type: 3}
-  color_top_player:
-  - serializedVersion: 2
-    rgba: 4279828735
-  - serializedVersion: 2
-    rgba: 4284940543
-  - serializedVersion: 2
-    rgba: 4278756351
   color_select:
     serializedVersion: 2
     rgba: 4278234879
@@ -16656,7 +16654,6 @@ MonoBehaviour:
   - {fileID: 531475776}
   music_background: {fileID: 531475776}
   ca_chet_prefab: {fileID: 5693954413890407951, guid: f44d40053060d724aa82f481052347c4, type: 3}
-  item_socre_prefab: {fileID: 4319498487129313463, guid: ad91e1f3a333e6d4d99237363c9874fa, type: 3}
   HorizontalLayoutGroup_player_sel: {fileID: 479884323}
   player_ca:
   - {fileID: 2018232843}
