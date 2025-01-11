@@ -66,8 +66,7 @@ public class game : MonoBehaviour
 
     async void Start()
     {
-        await UnityServices.InitializeAsync();
-        this.carrot.Load_Carrot(this.check_exit_app);
+        await this.carrot.Load_CarrotAsync(this.check_exit_app);
         this.carrot.shop.onCarrotPaySuccess += this.onBuySuccessCarrotPay;
         this.carrot.act_after_close_all_box = this.set_list_gamepad_main;
         this.ads.On_Load();
